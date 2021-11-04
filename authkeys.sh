@@ -26,15 +26,15 @@ do
         echo "-------------------------------------"
     fi
     echo "Options menu:"
-    echo "1: Add new key"
-    echo "2: Delete an existing key"
-    echo "3: Exit"
+    echo "a: Add new key"
+    echo "d: Delete an existing key"
+    echo "q: Exit"
     if [ -d $KEYSHISTDIR ]; then
-        echo "4: Remove history directory [$KEYSHISTDIR]"
+        echo "p: Purge key history directory [$KEYSHISTDIR]"
     fi
     echo
     read -p "Select option: " MENU
-    if [ "$MENU" == "1" ]; then
+    if [ "$MENU" == "a" ]; then
         read -s -p "Enter new public key: " NEWKEY
         if [ -z "$NEWKEY" ]; then
             echo
@@ -54,7 +54,7 @@ do
             echo "Key has been added!";
             sleep 2
         fi
-    elif [ "$MENU" == "2" ]; then
+    elif [ "$MENU" == "d" ]; then
         read -p "Select key to delete: " DELKEY
         DELKEY=$((DELKEY - 1))
         if ((DELKEY < 0 || DELKEY >= ${#KEYSDATA[@]})); then
@@ -77,15 +77,15 @@ do
             echo "Key has been deleted!";
             sleep 2
         fi
-    elif [ "$MENU" == "3" ]; then
+    elif [ "$MENU" == "q" ]; then
         echo "Exiting..."
         exit
-    elif [ "$MENU" == "4" ]; then
+    elif [ "$MENU" == "p" ]; then
         rm -rf "$KEYSHISTDIR"
         echo "Key history cleared!"
         sleep 2
     else
-        echo "Invalid option"
+        echo "Invalid option!"
         sleep 2
     fi
 done
