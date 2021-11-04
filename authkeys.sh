@@ -9,11 +9,19 @@ do
     else
         readarray -t KEYSDATA < "$KEYSFILE"
         echo "List of authorized keys [$KEYSFILE]:"
+        echo
         COUNTER=0
         for LINE in "${KEYSDATA[@]}"; do
             ((COUNTER++))
-            echo "$COUNTER: $LINE"
+            if (( ${#LINE} > 100 )); then
+                START=${LINE:0:50}
+                END=${LINE:(-50)}
+                echo "$COUNTER: $START...$END"
+            else
+                echo "$COUNTER: $LINE"
+            fi
         done
+        echo
         echo "-------------------------------------"
     fi
     echo
