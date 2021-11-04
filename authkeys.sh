@@ -83,9 +83,12 @@ do
         echo "Exiting..."
         exit
     elif [ "$MENU" == "p" ]; then
-        rm -rf "$KEYSHISTDIR"
-        echo "Key history cleared!"
-        sleep 2
+        read -p "Are you sure you want to purge the change history? [y/N] " CONFIRMDELETEHISTORY
+        if [ "$CONFIRMDELETEHISTORY" == "y" ]; then
+            rm -rf "$KEYSHISTDIR"
+            echo "Key history cleared!"
+            sleep 2
+        fi
     else
         echo "Invalid option!"
         sleep 2
