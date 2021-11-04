@@ -11,7 +11,7 @@ do
     else
         readarray -t KEYSDATA < "$KEYSFILE"
         echo "List of authorized keys [$KEYSFILE]:"
-        echo
+        echo "-------------------------------------"
         COUNTER=0
         for LINE in "${KEYSDATA[@]}"; do
             ((COUNTER++))
@@ -23,15 +23,14 @@ do
                 echo "$COUNTER: $LINE"
             fi
         done
-        echo
         echo "-------------------------------------"
     fi
-    echo
+    echo "Options menu:"
     echo "1: Add new key"
     echo "2: Delete an existing key"
     echo "3: Exit"
     if [ -d $KEYSHISTDIR ]; then
-        echo "4: Remove temp dir [$KEYSHISTDIR]"
+        echo "4: Remove history directory [$KEYSHISTDIR]"
     fi
     echo
     read -p "Select option: " MENU
