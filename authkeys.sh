@@ -15,9 +15,9 @@ do
         COUNTER=0
         for LINE in "${KEYSDATA[@]}"; do
             ((COUNTER++))
-            if (( ${#LINE} > 100 )); then
-                START=${LINE:0:50}
-                END=${LINE:(-50)}
+            if (( ${#LINE} > 80 )); then
+                START=${LINE:0:17}
+                END=${LINE:(-60)}
                 echo "$COUNTER: $START...$END"
             else
                 echo "$COUNTER: $LINE"
@@ -36,7 +36,7 @@ do
     read -p "Select option: " MENU
     if [ "$MENU" == "a" ]; then
         read -s -p "Enter new public key: " NEWKEY
-        if [ -z "$NEWKEY" ]; then
+        if [ -z "$NEWKEY" ] || (( ${#NEWKEY} < 60 )); then
             echo
             echo "Invalid entry!";
             sleep 2
@@ -46,7 +46,7 @@ do
         echo
         echo $NEWKEY
         echo
-        read -p "Are you sure you would like to add this key? [y/N]" SURE
+        read -p "Are you sure you would like to add this key? [y/N] " SURE
         if [ "$SURE" == "y" ]; then
             mkdir -p "$KEYSHISTDIR"
             cp "$KEYSFILE" "$KEYSHIST"
