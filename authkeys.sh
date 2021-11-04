@@ -2,6 +2,7 @@
 KEYSFILE="$HOME/.ssh/authorized_keys"
 KEYSTEMP="$KEYSFILE.overwrite"
 KEYSHISTDIR="$KEYSFILE.history"
+HORIZONTALSEPARATOR="--------------------------------------------------------------------------------"
 while :
 do
     clear
@@ -11,20 +12,21 @@ do
     else
         readarray -t KEYSDATA < "$KEYSFILE"
         echo "List of authorized keys [$KEYSFILE]:"
-        echo "-------------------------------------"
+        echo $HORIZONTALSEPARATOR
         COUNTER=0
         for LINE in "${KEYSDATA[@]}"; do
             ((COUNTER++))
+            LINE="$COUNTER: $LINE"
             if (( ${#LINE} > 80 )); then
                 START=${LINE:0:17}
                 END=${LINE:(-60)}
-                echo "$COUNTER: $START...$END"
+                echo "$START...$END"
             else
-                echo "$COUNTER: $LINE"
+                echo $LINE
             fi
         done
-        echo "-------------------------------------"
     fi
+    echo $HORIZONTALSEPARATOR
     echo "Options menu:"
     echo "a: Add new key"
     echo "d: Delete an existing key"
