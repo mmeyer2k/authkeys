@@ -4,8 +4,8 @@ KEYSTEMP="$KEYSFILE.overwrite"
 KEYSHISTDIR="$KEYSFILE.history"
 while :
 do
-    KEYSHIST="$KEYSHISTDIR/$(date +%s)"
     clear
+    KEYSHIST="$KEYSHISTDIR/$(date +%s)"
     if [ ! -w "$KEYSFILE" ]; then
         echo "Authorized keys [$KEYSFILE] file does not exist. It will be created upon save."
     else
