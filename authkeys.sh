@@ -72,6 +72,7 @@ do
             mkdir -p "$KEYSHISTDIR"
             cp "$KEYSFILE" "$KEYSHIST"
             unset KEYSDATA[$DELKEY]
+            touch "$KEYSTEMP"
             for LINE in "${KEYSDATA[@]}"; do
                 echo "$LINE" >> "$KEYSTEMP"
             done
