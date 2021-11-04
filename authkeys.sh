@@ -1,4 +1,5 @@
 #!/bin/bash
+FINGERPRINTMODE=false
 KEYSFILE="$HOME/.ssh/authorized_keys"
 KEYSTEMP="$KEYSFILE.overwrite"
 KEYSHISTDIR="$KEYSFILE.history"
@@ -16,6 +17,9 @@ do
         COUNTER=0
         for LINE in "${KEYSDATA[@]}"; do
             ((COUNTER++))
+            if [ $FINGERPRINTMODE == true ]; then
+                LINE=$(echo $LINE | ssh-keygen -lf - 2>&1)
+            fi
             LINE="$COUNTER: $LINE"
             if (( ${#LINE} > 80 )); then
                 START=${LINE:0:17}
@@ -30,6 +34,7 @@ do
     echo "Options menu:"
     echo "a: Add new key"
     echo "d: Delete an existing key"
+    echo "f: Toggle fingerprint display"
     echo "q: Exit"
     if [ -d $KEYSHISTDIR ]; then
         echo "p: Purge key history directory [$KEYSHISTDIR]"
@@ -38,15 +43,18 @@ do
     read -p "Select option: " MENU
     if [ "$MENU" == "a" ]; then
         read -s -p "Enter new public key: " NEWKEY
-        if [ -z "$NEWKEY" ] || (( ${#NEWKEY} < 60 )); then
+        if ! (echo $NEWKEY | ssh-keygen -lf - 2>/dev/null 1>/dev/null); then
             echo
-            echo "Invalid entry!";
+            echo "Not a valid public key!";
             sleep 2
             continue
         fi
         echo
         echo
-        echo $NEWKEY
+        echo "$NEWKEY"
+        echo
+        echo "Fingerprint:"
+        echo "$NEWKEY" | ssh-keygen -lf -
         echo
         read -p "Are you sure you would like to add this key? [y/N] " SURE
         if [ "$SURE" == "y" ]; then
@@ -66,6 +74,9 @@ do
         fi
         echo
         echo ${KEYSDATA[$DELKEY]}
+        echo
+        echo "Fingerprint:"
+        echo "${KEYSDATA[$DELKEY]}" | ssh-keygen -lf -
         echo
         read -p "Delete this key? [y/N] " CONFIRMDELETE
         if [ "$CONFIRMDELETE" == "y" ]; then
@@ -89,6 +100,12 @@ do
             rm -rf "$KEYSHISTDIR"
             echo "Key history cleared!"
             sleep 2
+        fi
+    elif [ "$MENU" == "f" ]; then
+        if ( $FINGERPRINTMODE == true ); then
+            FINGERPRINTMODE=false
+        else
+            FINGERPRINTMODE=true
         fi
     else
         echo "Invalid option!"
