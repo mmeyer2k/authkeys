@@ -35,10 +35,10 @@ do
     echo "a: Add new key"
     echo "d: Delete an existing key"
     echo "f: Toggle fingerprint display"
-    echo "q: Exit"
     if [ -d $KEYSHISTDIR ]; then
         echo "p: Purge key history directory [$KEYSHISTDIR]"
     fi
+    echo "q: Exit"
     echo
     read -p "Select option: " MENU
     if [ "$MENU" == "a" ]; then
