@@ -31,7 +31,9 @@ do
         done
     fi
     echo $HORIZONTALSEPARATOR
+    tput smul
     echo "Options menu:"
+    tput sgr0
     echo "a: Add new key"
     echo "d: Delete an existing key"
     echo "f: Toggle fingerprint display"
