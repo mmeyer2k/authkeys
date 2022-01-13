@@ -1,4 +1,5 @@
 #!/bin/bash
+set -u
 FINGERPRINTMODE=false
 KEYSFILE="$HOME/.ssh/authorized_keys"
 KEYSTEMP="$KEYSFILE.overwrite"
