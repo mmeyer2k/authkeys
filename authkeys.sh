@@ -110,6 +110,8 @@ do
         else
             FINGERPRINTMODE=true
         fi
+    elif [ "$MENU" == "" ]; then
+        continue
     else
         echo "Invalid option!"
         sleep 2
