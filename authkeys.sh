@@ -1,6 +1,7 @@
 #!/bin/bash
 set -u
 FINGERPRINTMODE=false
+WIDEMODE=false
 KEYSFILE="$HOME/.ssh/authorized_keys"
 KEYSTEMP="$KEYSFILE.overwrite"
 KEYSHISTDIR="$KEYSFILE.history"
@@ -22,7 +23,7 @@ do
                 LINE=$(echo $LINE | ssh-keygen -lf - 2>&1)
             fi
             LINE="$COUNTER: $LINE"
-            if (( ${#LINE} > 80 )); then
+            if (( ${#LINE} > 80 )) && [ $WIDEMODE == false ]; then
                 START=${LINE:0:17}
                 END=${LINE:(-60)}
                 echo "$START...$END"
@@ -37,7 +38,8 @@ do
     tput sgr0
     echo "a: Add new key"
     echo "d: Delete an existing key"
-    echo "f: Toggle fingerprint display"
+    echo "f: Toggle fingerprint mode"
+    echo "w: Toggle wide mode"
     if [ -d $KEYSHISTDIR ]; then
         echo "p: Purge key history directory [$KEYSHISTDIR]"
     fi
@@ -105,10 +107,16 @@ do
             sleep 2
         fi
     elif [ "$MENU" == "f" ]; then
-        if ( $FINGERPRINTMODE == true ); then
+        if [ $FINGERPRINTMODE == true ]; then
             FINGERPRINTMODE=false
         else
             FINGERPRINTMODE=true
+        fi
+    elif [ "$MENU" == "w" ]; then
+        if [ $WIDEMODE == true ]; then
+            WIDEMODE=false
+        else
+            WIDEMODE=true
         fi
     elif [ "$MENU" == "" ]; then
         continue
