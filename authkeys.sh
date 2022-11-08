@@ -11,6 +11,9 @@ do
     clear
     KEYSHIST="$KEYSHISTDIR/$(date +%s)"
     if [ ! -w "$KEYSFILE" ]; then
+        echo "░█▀█░█░█░▀█▀░█░█░█░█░█▀▀░█░█░█▀▀"
+        echo "░█▀█░█░█░░█░░█▀█░█▀▄░█▀▀░░█░░▀▀█"
+        echo "░▀░▀░▀▀▀░░▀░░▀░▀░▀░▀░▀▀▀░░▀░░▀▀▀"
         echo "Authorized keys [$KEYSFILE] file does not exist. It will be created upon save."
     else
         readarray -t KEYSDATA < "$KEYSFILE"
