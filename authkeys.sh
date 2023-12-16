@@ -50,7 +50,7 @@ do
     echo
     read -p "Select option: " MENU
     if [ "$MENU" == "a" ]; then
-        read -s -p "Enter new public key: " NEWKEY
+        read -s -p "Enter new public key (hidden): " NEWKEY
         if ! (echo $NEWKEY | ssh-keygen -lf - 2>/dev/null 1>/dev/null); then
             echo
             echo "Not a valid public key!";
