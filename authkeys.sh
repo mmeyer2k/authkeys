@@ -13,8 +13,15 @@ do
     echo "░█▀█░█░█░▀█▀░█░█░█░█░█▀▀░█░█░█▀▀"
     echo "░█▀█░█░█░░█░░█▀█░█▀▄░█▀▀░░█░░▀▀█"
     echo "░▀░▀░▀▀▀░░▀░░▀░▀░▀░▀░▀▀▀░░▀░░▀▀▀"
+    if [ "$#" -gt 0 ]; then
+        echo
+        echo "Help:"
+        echo "  - Authkeys is an interactive terminal application"
+        echo "  - It takes no parameters"
+        exit
+    fi
     if [ ! -w "$KEYSFILE" ]; then
-        echo "Authorized keys [$KEYSFILE] file does not exist. It will be created upon save."
+        echo "Authorized keys file [$KEYSFILE] does not exist. It will be created upon save."
     else
         readarray -t KEYSDATA < "$KEYSFILE"
         echo "List of authorized keys [$KEYSFILE]:"
